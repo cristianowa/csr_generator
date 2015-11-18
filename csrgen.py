@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-import sys
 import argparse
 import pexpect
 from commands import getoutput as cmd
@@ -12,7 +11,6 @@ parser.add_argument("-state", help="State or Province Name ", dest="state", defa
 parser.add_argument("-city", help="Locality name", dest="city", default="Porto Alegre")
 parser.add_argument("-org", help="Organization name", dest="org", default="Viewbox Ltda")
 parser.add_argument("-unit", help="Organizational unit name", dest="unit", default="Matrix")
-parser.add_argument("-cname", help="Common Name", dest="cname", default="Cristiano W. Araujo")
 parser.add_argument("-email", help="Email Address", dest="email", default="cristianowerneraraujo@gmail.com")
 parser.add_argument("-challenge", help="A challenge password (extra)", dest="challenge", default="")
 parser.add_argument("-opt_company", help="An optional company name (extra)", dest="opt_company", default="")
@@ -26,7 +24,7 @@ for arg in dir(args):
 def generate_csr():
     cmd("openssl genrsa -out " + args.name + ".key 2048")
     child = pexpect.spawn("openssl req -new -sha256 -key " + args.name + ".key -out " + args.name + ".csr")
-    for arg in [country, state, city, org, unit, cname, email, challenge, opt_company]:
+    for arg in [country, state, city, org, unit, name, email, challenge, opt_company]:
         child.sendline(arg)
         child.expect("\]:")
 
